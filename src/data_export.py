@@ -36,7 +36,7 @@ def insert_content(
     content_dict: dict[str, str],
     image: Figure,
     template_path: Optional[str] = "./templates/report_template.docx",
-):
+) -> str:
     """
     Insert actual content into the template
 
