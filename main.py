@@ -1,16 +1,15 @@
-from fastapi import FastAPI
-import uvicorn
-from src.dataloader import load_data
+from loguru import logger
+from matplotlib.figure import Figure
 
-app = FastAPI()
+from src.data_preperation import prepare_data, prepare_plots
+from src.dataloader import load_test_data
 
-testdaten = load_data()
+unproccessed_data = load_test_data()
+proccessed_data = prepare_data(unproccessed_data)
+figures: list[Figure] = prepare_plots(proccessed_data)
 
-@app.get("/")
-def read_root():
-    return testdaten.to_dict()
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
-
+# Display the figure
+for i in range(len(figures)):
+    figures[i].show()
+input()
+logger.info(proccessed_data)
